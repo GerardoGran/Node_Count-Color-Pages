@@ -4,6 +4,8 @@ var fileName = "Thesis_TEST.pdf"
 var colorCount = 0;
 var greyCount;
 
+//Executes Ghostscript for Windows 64bit command
+//For this to work, Ghostscript must be installed and added to the %PATH% variable
 exec(`gswin64c -q -o - -sDEVICE=inkcov ${fileName} | grep -v Page`, (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
