@@ -1,8 +1,14 @@
 const { exec } = require('child_process');
 
+const colorCost = 5.00;
+const greyCost = 1.50;
+const bindCost = 290.00;
+
+
 var fileName = "Thesis_TEST.pdf"
 var colorCount = 0;
 var greyCount;
+var finalCost;
 
 //Executes Ghostscript for Windows 64bit command
 //For this to work, Ghostscript must be installed and added to the %PATH% variable
@@ -32,9 +38,10 @@ exec(`gswin64c -q -o - -sDEVICE=inkcov ${fileName} | grep -v Page`, (error, stdo
 
     greyCount = docLength - colorCount;
 
-    console.log(`${fileName}:\n|-Pages: ${docLength}\n|-->B&W: ${greyCount}\n|-->Color: ${colorCount}`);
-});
+    finalCost = bindCost + colorCost * colorCount + greyCost * greyCount;
 
+    console.log(`${fileName}:\n|-Pages: ${docLength}\n|-->B&W: ${greyCount}\n|-->Color: ${colorCount}\n\nCost: ${finalCost}`);
+});
 
 // GHOSTSCRIPT COLOR DETECTION: https://stackoverflow.com/questions/12299574/ghostscript-color-detection
 // SHELL COMMANDS WITH NODE JS: https://stackabuse.com/executing-shell-commands-with-node-js/
